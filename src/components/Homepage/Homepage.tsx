@@ -4,7 +4,7 @@ interface WelcomeMessageProps {
   username: string;
 }
 
-const WelcomeMessage: React.FC<WelcomeMessageProps> = ({ username }) => {
+const Homepage: React.FC<WelcomeMessageProps> = ({ username }) => {
   return (
     <div>
       <h2>Welcome, {username}!</h2>
@@ -13,4 +13,4 @@ const WelcomeMessage: React.FC<WelcomeMessageProps> = ({ username }) => {
   );
 };
 
-export default WelcomeMessage;
+export default Homepage;
