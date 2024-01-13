@@ -2,9 +2,9 @@
 import { useState } from "react";
 import "./Login.scss"; 
 import { checkUserExistence } from "../../services/userService";
-import { useDispatch } from "react-redux";
-import { loginUser,selectIsAuthenticated,User } from "../../store/slices/authSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser,selectIsAuthenticated } from "../../store/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -12,6 +12,8 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
+  
   const usernameChangeHandler = (e:any) => {
     setErrorMessage('');
     setUsername(e.target.value);
@@ -24,20 +26,17 @@ const Login = () => {
 
   console.log(isAuth);
   const loginHandler = () => {
-    const userExists = checkUserExistence(username, password);
-
-    if (userExists) {
-      const userData: User = { username: 'exampleUser' };
-
-      dispatch(loginUser(userData));
-      console.log(`Hello ${username}!`);
+    const user = checkUserExistence(username, password);
+    if (user) {
+      dispatch(loginUser(user));
+      navigate('/');
     } else {
       setErrorMessage('Invalid username or password. Please try again.');
     }  
 };
 
   const registerHandler = () => {
-    console.log(`Need to be registered`);
+    navigate('/register');
   };
 
   return (
