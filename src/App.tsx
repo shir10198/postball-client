@@ -4,17 +4,26 @@ import './App.css';
 import Navbar from './components/General/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import HomePage from './components/Homepage/Homepage';
 import UserProfile from './components/UserProfile/UserProfile';
-
+import { USERS_DATA } from './services/userService';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUsers } from './store/slices/usersSlice';
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(setUsers(USERS_DATA));
+  },[])
   return (
     <Router>
       <div className="App">
         <Navbar />
         <Routes>
-          <Route path="/" element={<UserProfile/>} />
+          <Route path="/" element={<HomePage/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/user-profile" element={<UserProfile />} />
         </Routes>
       </div>
     </Router>

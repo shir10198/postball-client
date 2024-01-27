@@ -3,9 +3,14 @@
 import React, { useState } from 'react';
 import { User } from '../../types/generalTypes';
 import { sports } from '../../services/userService';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../store/slices/usersSlice';
+import './Register.scss'; 
 
 const Register: React.FC = () => {
+  const dispatch = useDispatch();
   const [user, setUser] = useState<User>({
+    id: '',
     username: '',
     email: '',
     password: '',
@@ -13,7 +18,7 @@ const Register: React.FC = () => {
     favoriteSport: '',
   });
 
-  const [errors, setErrors] = useState<Record<keyof User, string>>({
+  const [errors, setErrors] = useState<any>({
     username: '',
     email: '',
     password: '',
@@ -29,7 +34,7 @@ const Register: React.FC = () => {
     }));
 
     // Clear the error when the user starts typing in a field
-    setErrors((prevErrors) => ({
+    setErrors((prevErrors: any) => ({
       ...prevErrors,
       [name]: '',
     }));
@@ -42,7 +47,7 @@ const Register: React.FC = () => {
     const validationErrors: any = {};
 
     Object.entries(user).forEach(([key, value]) => {
-      if (!value) {
+      if (key !== 'id' && !value) {
         validationErrors[key as keyof User] = `${key} is required`;
       }
     });
@@ -53,13 +58,13 @@ const Register: React.FC = () => {
     }
 
     // Proceed with registration logic
-    console.log('User registered:', user);
+    dispatch(addUser(user));
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="register-container">
+      <h2 className="register-header">Register</h2>
+      <form onSubmit={handleSubmit} className="register-form">
         <label>
           Username:
           <input
@@ -69,7 +74,7 @@ const Register: React.FC = () => {
             onChange={handleChange}
             required
           />
-          <span style={{ color: 'red' }}>{errors.username}</span>
+          <span className="error">{errors.username}</span>
         </label>
         <br />
         <label>
@@ -81,7 +86,7 @@ const Register: React.FC = () => {
             onChange={handleChange}
             required
           />
-          <span style={{ color: 'red' }}>{errors.email}</span>
+          <span className="error">{errors.email}</span>
         </label>
         <br />
         <label>
@@ -93,7 +98,7 @@ const Register: React.FC = () => {
             onChange={handleChange}
             required
           />
-          <span style={{ color: 'red' }}>{errors.password}</span>
+          <span className="error">{errors.password}</span>
         </label>
         <br />
         <label>
@@ -105,30 +110,30 @@ const Register: React.FC = () => {
             onChange={handleChange}
             required
           />
-          <span style={{ color: 'red' }}>{errors.image}</span>
+          <span className="error">{errors.image}</span>
         </label>
         <br />
         <label>
-            Favorite Sport:
-            <select
-                name="favoriteSport"
-                value={user.favoriteSport}
-                onChange={handleChange}
-                required
-            >
-                <option value="" disabled>
-                Select a sport
-                </option>
-                {sports.map((sport) => (
-                <option key={sport} value={sport}>
-                    {sport}
-                </option>
-                ))}
-            </select>
-          <span style={{ color: 'red' }}>{errors.favoriteSport}</span>
+          Favorite Sport:
+          <select
+            name="favoriteSport"
+            value={user.favoriteSport}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Select a sport
+            </option>
+            {sports.map((sport) => (
+              <option key={sport} value={sport}>
+                {sport}
+              </option>
+            ))}
+          </select>
+          <span className="error">{errors.favoriteSport}</span>
         </label>
         <br />
-        <button type="submit">Register</button>
+        <button type="submit" className="register-button">Register</button>
       </form>
     </div>
   );

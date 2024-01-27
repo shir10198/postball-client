@@ -1,16 +1,25 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser, selectIsAuthenticated } from '../../store/slices/authSlice';
+import { useNavigate } from 'react-router';
 
-interface WelcomeMessageProps {
-  username: string;
-}
+const HomePage = () => {
+  const user = useSelector(selectUser);
+  const isAuth = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
 
-const Homepage: React.FC<WelcomeMessageProps> = ({ username }) => {
+  useEffect(()=>{
+      if(!isAuth){
+      navigate('/login');
+    }
+  },[isAuth,navigate])
+ 
   return (
-    <div>
-      <h2>Welcome, {username}!</h2>
-      <p>Thank you for logging in.</p>
+    <div className='homepage-container'>
+      <h2>Welcome, {user?.username}!</h2>
+      <p>Thank you for logging in.</p>      
     </div>
   );
 };
 
-export default Homepage;
+export default HomePage;

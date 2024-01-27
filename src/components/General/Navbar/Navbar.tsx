@@ -19,11 +19,12 @@ const Navbar: React.FC = () => {
     <nav>
       <ul>
         <li>Postball</li>
-        <li><Link to="/">Home</Link></li>
         {isLoggedIn ? (
           <>
+            <li><Link to="/">Home</Link></li>
             <li>Hello {user?.username}</li>
-            <li><button onClick={handleLogout}>Logout</button></li>
+            <li><Link to="/user-profile">My profile</Link></li>
+            <li onClick={handleLogout}> Logout </li>
           </>
         ) : (
           <li><Link to="/login">Login</Link> | <Link to="/register">Register</Link></li>
