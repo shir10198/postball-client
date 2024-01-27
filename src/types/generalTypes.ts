@@ -1,7 +1,8 @@
 export interface User {
-    username: string;
-    email: string;
-    password: string;
-    image: string;
-    favoriteSport: string;
-  }
+  id?: string | undefined;
+  username?: string | undefined;
+  email?: string | undefined;
+  password?: string | undefined;
+  image?: string | undefined;
+  favoriteSport?: string | undefined;
+}

@@ -1,7 +1,8 @@
 import { User } from "../types/generalTypes";
 
-const users: User[] = [
+export const USERS_DATA: User[] = [
   {
+    id:'1',
     username: 'shir',
     email: 'shir@example.com',
     password: 'shir',
@@ -9,6 +10,7 @@ const users: User[] = [
     favoriteSport: 'Football',
   },
   {
+    id:'2',
     username: 'linor',
     email: 'linor@example.com',
     password: 'linor',
@@ -17,7 +19,7 @@ const users: User[] = [
   },
 ];
   
-export const checkUserExistence = (username: string, password: string): User | false => {
+export const checkUserExistence = (users: User[], username: string, password: string): User | false => {
   const matchingUser = users.find(user => user.username === username && user.password === password);
   return matchingUser || false;
 };

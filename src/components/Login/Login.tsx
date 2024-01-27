@@ -3,15 +3,16 @@ import { useState } from "react";
 import "./Login.scss"; 
 import { checkUserExistence } from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser,selectIsAuthenticated } from "../../store/slices/authSlice";
+import { loginUser } from "../../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import { selectUsers } from "../../store/slices/usersSlice";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectIsAuthenticated);
+  const users = useSelector(selectUsers);
   const navigate = useNavigate();
   
   const usernameChangeHandler = (e:any) => {
@@ -24,9 +25,8 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  console.log(isAuth);
   const loginHandler = () => {
-    const user = checkUserExistence(username, password);
+    const user = checkUserExistence(users, username, password);
     if (user) {
       dispatch(loginUser(user));
       navigate('/');
