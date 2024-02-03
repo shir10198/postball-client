@@ -10,6 +10,7 @@ import { USERS_DATA } from './services/userService';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUsers } from './store/slices/usersSlice';
+import GroupPage from './components/GroupPage/GroupPage';
 function App() {
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/groups/:id" element={<GroupPage />} />
         </Routes>
       </div>
     </Router>
